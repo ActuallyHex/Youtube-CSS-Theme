@@ -1,0 +1,928 @@
+/* ==UserStyle==
+@name           YouTube Unsloppified
+@namespace      YouTube unsloppified
+@version        1.0.0
+@description    An extension that "Unsloppifies" YouTube.
+@author         Hex!
+==/UserStyle== */
+@-moz-document url-prefix("https://www.youtube.com/") {
+
+	/*****************************************
+ 	** 0. BRANDING / CUSTOM LABELS
+ 	******************************************/
+	/* Footer Tag */
+	#copyright div::after {
+		white-space: pre;
+		content: "\aYoutube Unsloppified";
+	}
+
+	/* "Unsloppified" next to YouTube logo */
+	ytd-masthead #start ytd-topbar-logo-renderer #logo::after {
+		content: "Unsloppified";
+		font-size: 1.45rem;
+		font-weight: 700;
+		color: #fff6;
+		display: inline-block;
+		margin-left: -10px;
+		position: relative;
+		top: 5px;
+		pointer-events: none;
+		white-space: nowrap;
+		padding-right: 5px;
+	}
+
+	.style-scope.ytd-logo {
+		padding: 17px 14px 18px 6px;
+	}
+	
+	/*****************************************
+ 	** GLOBAL UI CLEANUP (NO BLUR, BLACK BG)
+ 	******************************************/
+	#chips-wrapper,
+	#guide-content,
+	ytd-masthead,
+	tp-yt-paper-dialog {
+		backdrop-filter: none !important;
+		box-shadow: none !important;
+		background: #000 !important;
+	}
+
+	/* Rounded edges for guide links */
+	ytd-guide-entry-renderer[active],
+	#endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:hover {
+		border-radius: 3px;
+	}
+
+
+	/*****************************************
+ 	** CONTENT REMOVAL / FILTERING
+ 	******************************************/
+	/* Hide Mini Games */
+	ytd-rich-shelf-renderer:has(ytd-mini-game-card-view-model) {
+		display: none !important;
+	}
+
+	/* Hide Members Only Videos */
+	yt-lockup-view-model:has(badge-shape.yt-badge-shape--commerce),
+	ytd-rich-item-renderer:has(.badge-style-type-members-only) {
+		display: none !important;
+	}
+
+	/* Hide “Ask for videos any way you like BETA” */
+	[class*="ytdTalkToRecsFlowRendererFlowContent"] {
+		display: none !important;
+	}
+
+	/* Hide Subscriptions (Channels) section in guide */
+	ytd-guide-section-renderer:has(a[href="/feed/channels"]) {
+		display: none !important;
+	}
+
+	/* Hide Explore section in guide bar */
+	[class*="ytd-guide-renderer"]:has([href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"]):nth-child(3) {
+		display: none !important;
+	}
+
+	/* Hide Premium tab in guide bar */
+	[class*="ytd-guide-renderer"]:has([href*="/premium"]):nth-child(4) {
+		display: none !important;
+	}
+
+	/*****************************************
+ 	** SEARCH RESULTS FILTERING
+ 	******************************************/
+	/* Hide irrelevant search shelves */
+	[is-search] ytd-shelf-renderer.ytd-item-section-renderer:not(ytd-channel-renderer + ytd-shelf-renderer),
+	[is-search] ytd-horizontal-card-list-renderer.ytd-item-section-renderer:not(:first-child),
+	[is-search] ytd-exploratory-results-renderer.ytd-item-section-renderer {
+		display: none !important;
+	}
+
+
+	/*****************************************
+ 	** HIDE SHORTS (GLOBAL)
+ 	******************************************/
+	#dismissible.ytd-compact-video-renderer:has([href*="/shorts/"]),
+	#items.ytd-grid-renderer > ytd-grid-video-renderer.ytd-grid-renderer:has([href*="/shorts/"]),
+	#items.yt-horizontal-list-renderer > *.yt-horizontal-list-renderer:has([href*="/shorts/"]),
+	#sections .ytd-guide-renderer:first-child ytd-guide-entry-renderer:nth-child(2),
+	.style-scope .ytd-mini-guide-renderer:nth-child(2),
+	a[title="Shorts"],
+	grid-shelf-view-model,
+	ytd-notification-renderer:has([href*="/shorts/"]),
+	ytd-reel-shelf-renderer,
+	ytd-reel-shelf-renderer:has([href*="/shorts/"]),
+	ytd-video-renderer:has([href*="/shorts/"]),
+	ytd-rich-item-renderer:has([href*="/shorts/"]):not([is-slim-media]),
+	ytd-rich-section-renderer:has([is-shorts]),
+	[page-subtype="subscriptions"] ytd-item-section-renderer:has([href*="/shorts/"]),
+	[page-subtype="subscriptions"] ytd-rich-shelf-renderer[is-shorts],
+	[page-subtype="channels"] .yt-tab-shape-wiz--host-clickable[tab-title="Shorts"],
+	[page-subtype="hashtag-landing-page"] .yt-tab-shape-wiz--host-clickable[tab-title="Shorts"] {
+		display: none !important;
+	}
+
+
+	/*****************************************
+ 	** GRID LAYOUT – 5 VIDEOS PER ROW
+ 	******************************************/
+	:root,
+	ytd-rich-grid-renderer,
+	ytd-rich-item-renderer[is-responsive-grid="STANDARD"]:not([is-post]) {
+		--ytd-rich-grid-items-per-row: 5 !important;
+	}
+
+	/* Force shelves above grid */
+	ytd-rich-section-renderer {
+		order: -1;
+	}
+
+	/* Skeleton thumbnails */
+	#home-container-media .rich-grid-media-skeleton {
+		max-width: "calc(100%/%s - 16px)" % 5 !important;
+		min-width: "calc(100%/%s - 16px)" % 5 !important;
+	}
+
+	/* Slim grid exception */
+	ytd-rich-grid-media[mini-mode],
+	ytd-rich-grid-renderer[is-slim-grid] #contents.ytd-rich-grid-renderer {
+		max-width: initial;
+	}
+
+	ytd-two-column-browse-results-renderer[page-subtype="channels"]:has(ytd-rich-grid-renderer:not([is-shorts-grid])) {
+		width: calc(100% - 32px) !important;
+		max-width: calc( var(5) * (var(--ytd-rich-grid-item-max-width) + var(--ytd-rich-grid-item-margin))) !important;
+	}
+
+	/* Show hidden items 3–5 */
+	ytd-rich-item-renderer:nth-child(n + 3):nth-child(-n + 5):has(#video-title.ytd-rich-grid-media)[hidden] {
+		display: block !important;
+	}
+
+	#content.ytd-rich-section-renderer {
+		margin: 0 8px;
+	}
+
+	ytd-rich-item-renderer[rendered-from-rich-grid] {
+		width: calc(100% / var(--ytd-rich-grid-items-per-row) - var(--ytd-rich-grid-item-margin) - .01px) !important;
+		margin-left: calc(var(--ytd-rich-grid-item-margin) / 2) !important;
+		margin-right: calc(var(--ytd-rich-grid-item-margin) / 2) !important;
+	}
+
+	[is-default-grid] > #contents.ytd-rich-grid-renderer {
+		width: calc(100% - 32px);
+		max-width: calc( var(--ytd-rich-grid-items-per-row) * (var(--ytd-rich-grid-item-max-width) + var(--ytd-rich-grid-item-margin)));
+	}
+
+	/* Hide ads + skeletons */
+	.skeleton-bg-color.ytd-ghost-grid-renderer,
+	ytd-rich-item-renderer:has(ytd-ad-slot-renderer) {
+		display: none;
+	}
+
+
+	/*****************************************
+ 	** CHANNEL PAGE APPEARANCE
+ 	******************************************/
+	/* Button rounding */
+	.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--tonal,
+	.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled {
+		border-radius: 2px;
+	}
+
+	/* Subscribe button color */
+	.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled {
+		color: #f1f1f1;
+		background: #e62117;
+	}
+
+	.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled:hover {
+		color: #f1f1f1;
+		background: #cc181e;
+	}
+
+
+	/*****************************************
+ 	** MISC UI CLEANUP / RADIUS FIXES
+ 	******************************************/
+	/* Chips */
+	.ytChipShapeChip {
+		border-radius: 2px !important;
+	}
+
+	.ytChipShapeInactive {
+		background-color: rgba(255, 255, 255, 0.15);
+	}
+	.ytChipShapeInactive:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	/* Medium buttons */
+	.yt-spec-button-shape-next--size-m {
+		border-radius: 2px !important;
+	}
+
+	/* Hide frosted-glass */
+	#frosted-glass.with-chipbar.ytd-app {
+		display: none !important;
+	}
+
+	ytd-mini-guide-renderer[frosted-glass] {
+		background-color: #000000;
+	}
+
+	/* Thumbnail rounding */
+	.ytThumbnailViewModelLarge {
+		border-radius: 3px;
+	}
+
+	/* Search bar rounding */
+	.ytSearchboxComponentInputBox {
+		border-radius: 3px 0 0 3px !important;
+	}
+	.ytSearchboxComponentSearchButton {
+		border-radius: 0 3px 3px 0;
+	}
+	.ytSearchboxComponentSearchButton:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	/* Voice search button */
+	#voice-search-button.ytd-masthead {
+		border-radius: 3px;
+	}
+
+
+	#content.ytd-rich-item-renderer:has(ytd-feed-nudge-renderer) {
+		display: none !important;
+		width: 0% !important;
+	}
+	
+	/* Make the  container the positioning anchor */
+	.yt-spec-avatar-shape {
+		position: relative !important;
+	}
+
+	/* Move the LIVE badge under the avatar & center it */
+	.yt-spec-avatar-shape__live-badge--badge-medium {
+		position: absolute !important;
+		top: 120% !important;
+		/* Moves it below the avatar */
+		left: 50% !important;
+		/* Align badge center to avatar center */
+		transform: translateX(-50%) !important;
+		/* Perfect centering */
+		margin: 0 !important;
+		max-width: 100px !important;
+		height: 14px !important;
+	}
+
+	.yt-spec-avatar-shape__badge-text {
+		padding: 0 4px;
+	}
+
+
+	.yt-spec-avatar-shape__image {
+		border-radius: 7%;
+		box-shadow: 0px 0px 2px 1px #ffffff29
+	}
+
+	.yt-spec-avatar-shape--live-ring::after {
+		border-radius: 7%;
+	}
+	
+	/*****************************************
+ 	** Remove hover previews
+ 	******************************************/
+	.yt-lockup-metadata-view-model__text-container {
+		margin: -3px 0px;
+	}
+
+	/* 1. Neutralize the preview container entirely */
+	ytd-video-preview {
+		pointer-events: none !important;
+		opacity: 0 !important;
+	}
+
+	/* 2. Kill activation states YouTube uses */
+	ytd-video-preview[active],
+	ytd-video-preview[playing] {
+		pointer-events: none !important;
+		opacity: 0 !important;
+	}
+
+	/* 3. Force-hide the player container (this is the video element) */
+	#player-container.ytd-video-preview {
+		display: none !important;
+		opacity: 0 !important;
+		pointer-events: none !important;
+	}
+
+	/* 4. Also hide the media container */
+	#media-container.ytd-video-preview,
+	#media-container-link.ytd-video-preview {
+		pointer-events: none !important;
+	}
+
+	/* 5. Prevent YouTube from animating the thumbnail out */
+	ytd-video-preview[playing] #thumbnail-container.ytd-video-preview {
+		opacity: 1 !important;
+		/* keep thumbnail visible */
+	}
+
+	/* 6. Disable layout box entirely */
+	#video-preview-container.ytd-video-preview {
+		display: none !important;
+		width: 0 !important;
+		height: 0 !important;
+	}
+	
+
+	/*****************************************
+ 	** Home Page Sub Type
+ 	******************************************/
+	ytd-browse[page-subtype="home"] {
+
+		/* ---------------------------------------------
+        Uniform card body height
+       --------------------------------------------- */
+		ytd-rich-item-renderer {
+			--home-card-height: 340px;
+			/* Adjust this if you want */
+			height: var(--home-card-height) !important;
+			max-height: var(--home-card-height) !important;
+
+			display: flex !important;
+			flex-direction: column !important;
+			justify-content: flex-start !important;
+			position: relative !important;
+		}
+
+		/* Prevent child elements from breaking the uniform height */
+		ytd-rich-grid-media,
+		ytd-rich-grid-slim-media,
+		yt-lockup-view-model {
+			height: 100% !important;
+			max-height: 100% !important;
+		}
+
+		/* ---------------------------------------------
+        Title wrapping (3 lines max)
+       --------------------------------------------- */
+		#video-title,
+		.yt-lockup-metadata-view-model__title {
+			white-space: normal !important;
+			display: -webkit-box !important;
+			-webkit-box-orient: vertical !important;
+			-webkit-line-clamp: 3 !important;
+			overflow: hidden !important;
+			text-overflow: ellipsis !important;
+
+			line-height: 1.35em;
+			max-height: calc(1.35em * 3) !important;
+		}
+
+		/* ---------------------------------------------
+        Fix the spacing between thumbnail and text
+       --------------------------------------------- */
+		.yt-lockup-metadata-view-model__metadata {
+			flex-grow: 1 !important;
+			display: flex !important;
+			flex-direction: column !important;
+			justify-content: space-between !important;
+		}
+
+		/* Ensure thumbnail never pushes text down */
+		ytd-thumbnail {
+			flex-shrink: 0 !important;
+		}
+
+		/* Match feedback button style to rest of website */
+		/* Hide background box for more actions button */
+		.yt-lockup-view-model .yt-lockup-metadata-view-model__menu-button {
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s ease-in-out;
+		}
+
+		.yt-lockup-view-model:hover .yt-lockup-metadata-view-model__menu-button {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
+			width: 20px;
+			height: 30px;
+		}
+
+		.yt-lockup-metadata-view-model__menu-button {
+			right: 0;
+			top: -2px;
+		}
+
+
+		.yt-spec-touch-feedback-shape--thumbnail-size-large {
+			pointer-events: none !important;
+		}
+
+		.yt-lockup-view-model--vertical.yt-lockup-view-model--rich-grid-legacy-margin .yt-lockup-view-model__content-image {
+			/*pointer-events: none !important;*/
+		}
+
+
+		ytd-rich-section-renderer #content.style-scope.ytd-rich-section-renderer {
+			font-size: 0 !important;
+			position: relative;
+		}
+
+		ytd-rich-section-renderer #content.style-scope.ytd-rich-section-renderer::after {
+			content: "Home" !important;
+			font-size: 2.1rem !important;
+			position: absolute !important;
+			top: 0;
+			left: 0;
+			color: #f1f1f1 !important;
+			background-repeat: no-repeat;
+			pointer-events: none;
+			font-weight: 700;
+		}
+	}
+	
+	/*****************************************
+ 	** Subscriptions Sub Type
+ 	******************************************/
+	ytd-browse[page-subtype="subscriptions"] {
+
+
+		/* Replace "Latest" with "Subscriptions" in the Subscriptions tab */
+		ytd-shelf-renderer #title.style-scope.ytd-shelf-renderer {
+			font-size: 0 !important;
+			/* hide original text */
+			position: relative;
+		}
+
+		ytd-shelf-renderer #title.style-scope.ytd-shelf-renderer::after {
+			content: "Subscriptions" !important;
+			font-size: 2.1rem !important;
+			/* match YouTube text size */
+			position: relative;
+			top: 0%;
+			left: 0%;
+		}
+
+		/* Make each item a stacking context */
+		ytd-rich-item-renderer {
+			position: relative;
+			z-index: 0;
+			height: 90%;
+		}
+
+		/* Back-layer hover overlay */
+		ytd-rich-item-renderer::before {
+			content: "";
+			position: absolute;
+			top: -8px;
+			left: -8px;
+			right: -8px;
+			bottom: -5px;
+			background: rgba(255, 255, 255, 0);
+			transition: background 0.18s ease;
+			border-radius: 8px;
+			z-index: -1;
+			pointer-events: none;
+		}
+
+		/* Hover state */
+		ytd-rich-item-renderer:hover::before {
+			background: rgba(255, 255, 255, 0.12);
+		}
+
+		/* Ensure all children stay above overlay */
+		ytd-rich-item-renderer > * {
+			position: relative;
+			z-index: 1;
+		}
+
+		/* Show full video titles */
+		#video-title,
+		.yt-lockup-metadata-view-model__title {
+			white-space: normal !important;
+			display: -webkit-box !important;
+			-webkit-box-orient: vertical !important;
+			-webkit-line-clamp: 3 !important;
+			overflow: hidden !important;
+			text-overflow: ellipsis !important;
+
+			line-height: 1.35em;
+			max-height: calc(1.35em * 3) !important;
+		}
+
+		/* Match feedback button style to rest of website */
+		/* Hide background box for more actions button */
+		.yt-lockup-metadata-view-model__menu-button yt-touch-feedback-shape {
+			opacity: 0 !important;
+		}
+
+		/* Hide the icon path by default */
+		.yt-lockup-metadata-view-model__menu-button:has([aria-label="More actions"]) .ytSpecIconShapeHost svg path {
+			opacity: 0 !important;
+		}
+
+		/* When hovering the video item, show the button AND the icon */
+		ytd-rich-item-renderer:hover .yt-lockup-metadata-view-model__menu-button:has([aria-label="More actions"]) .ytSpecIconShapeHost svg path {
+
+			opacity: 1 !important;
+			transition: opacity 0.2s ease;
+		}
+
+		/* Fade in the touch-feedback container (the "hit box") */
+		ytd-rich-item-renderer:hover .yt-lockup-metadata-view-model__menu-button yt-touch-feedback-shape {
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s ease-in-out;
+		}
+
+		.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--text:hover {
+			background: rgba(255, 255, 255, .07);
+		}
+
+		.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
+			width: 20px;
+			height: 30px;
+		}
+
+		.yt-lockup-metadata-view-model__menu-button {
+			right: 0;
+			top: -2px;
+		}
+	}
+}
+
+
+@-moz-document regexp("https?://www.youtube.com/watch.*"),
+regexp("https?://www.youtube.com/clip.*"),
+regexp("https?://www.youtube.com/embed.*"),
+regexp("https?://www.youtube.com/live.*") {
+
+
+	#country-code.ytd-topbar-logo-renderer {
+		display: none !important;
+	}
+
+	#author-thumbnail.ytd-comment-view-model yt-img-shadow.ytd-comment-view-model {
+		border-radius: 7%;
+		box-shadow: 0px 0px 3px 1px #ffffff29;
+	}
+
+	#like-button.style-scope.ytd-comment-engagement-bar yt-button-shape button.yt-spec-button-shape-next.yt-spec-button-shape-next--text.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-s.yt-spec-button-shape-next--icon-button.yt-spec-button-shape-next--enable-backdrop-filter-experiment {
+		border-radius: 3px;
+	}
+
+	#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape button.yt-spec-button-shape-next.yt-spec-button-shape-next--text.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-s.yt-spec-button-shape-next--icon-button.yt-spec-button-shape-next--enable-backdrop-filter-experiment {
+		border-radius: 3px;
+	}
+
+	.yt-spec-button-shape-next--size-s {
+		border-radius: 3px;
+	}
+
+	/* Hide AI Video Overview   */
+	ytd-expandable-metadata-renderer:has(yt-icon) {
+		display: none !important;
+	}
+
+	yt-button-view-model:has(button[aria-label="Ask"]) {
+		display: none !important;
+	}
+
+	/* End Card Video Suggestions Begin */
+	.ytp-fullscreen-grid {
+		width: 100% !important;
+		height: 100% !important;
+	}
+
+	.ytp-fullscreen-grid-stills-container {
+		width: 100% !important;
+		max-width: none;
+		height: 87%;
+
+		transform: translateY(-50px);
+		/* adjust as needed */
+		overflow: hidden;
+
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(4, 1fr);
+
+		row-gap: 220px;
+		column-gap: 0px;
+	}
+
+
+	.ytp-modern-videowall-still {
+		padding-bottom: 60%;
+		transform: translateX(13px) translateY(10px);
+		width: 93%;
+		height: 100%;
+		padding-left: 0%;
+	}
+
+	.ytp-modern-videowall-still:hover {
+		border-radius: 3px !important;
+		box-shadow: 0px 0px 0px 3px #a4a1a18c;
+	}
+
+	.ytp-modern-videowall-still-image {
+		border-radius: 3px;
+	}
+
+	.ytp-modern-videowall-still-info-title {
+		font-size: clamp(5px, 0.65vw, 11.0px) !important;
+		white-space: normal !important;
+		line-height: 1.1 !important;
+		display: -webkit-box !important;
+		-webkit-line-clamp: 20;
+		-webkit-box-orient: vertical;
+	}
+
+	.ytp-modern-videowall-still-info-author:not(:empty) {
+		margin-top: 2.1px;
+	}
+
+	.ytp-modern-videowall-still-info-author {
+		font-size: clamp(5px, 0.6vw, 10.5px) !important;
+		line-height: 1.2 !important;
+		white-space: normal !important;
+		/* allow wrapping */
+	}
+
+	.ytp-modern-videowall-still-view-count-and-date-info {
+		font-size: clamp(5px, 0.6vw, 9px) !important;
+		line-height: 1.4 !important;
+		white-space: normal !important;
+		/* allow wrapping */
+		position: absolute;
+		top: 15px;
+		right: 1px;
+	}
+
+	.ytp-modern-videowall-still-info {
+		padding: 4px 3px;
+		margin-top: 4px;
+	}
+
+	/* FULLSCREEN OVERRIDES */
+	.ytp-fullscreen .ytp-fullscreen-grid-stills-container {
+		width: 95% !important;
+		height: 78% !important;
+
+		transform: translateY(-20px);
+		/* smaller shift for fullscreen */
+		row-gap: 200px !important;
+		/* bigger screens = more gap */
+		column-gap: 15px !important;
+	}
+
+	.ytp-fullscreen .ytp-modern-videowall-still {
+		padding-bottom: 34% !important;
+		/* adjust for fullscreen scaling */
+		width: 95% !important;
+		transform: translateX(10px) translateY(15px) !important;
+	}
+
+	.ytp-fullscreen .ytp-modern-videowall-still-info-title {
+		font-size: clamp(6px, 0.9vw, 14px) !important;
+	}
+
+	.ytp-fullscreen .ytp-modern-videowall-still-info {
+		padding: 0px 3px;
+		margin-top: 10px;
+	}
+
+	/* Disable fullscreen scrolling */
+	.ytp-fullscreen-grid-peeking.ytp-grid-scrollable.ytp-grid-scrolling .ytp-fullscreen-grid-main-content {
+		display: none !important;
+		overflow: hidden !important;
+	}
+
+	.ytp-fullscreen-grid-peeking.ytp-grid-scrollable.ytp-big-mode .ytp-fullscreen-grid {
+		display: none !important;
+		overflow: hidden !important;
+	}
+
+
+	.ytp-fullscreen-grid-active:not(.ended-mode) .ytp-fullscreen-grid {
+		display: none !important;
+		overflow: hidden !important;
+	}
+
+	#container.ytd-player {
+		overflow: hidden !important;
+	}
+	.ytd-player {
+		overflow: hidden !important;
+	}
+
+	.ytp-fullscreen .ytp-modern-videowall-still-view-count-and-date-info {
+		font-size: clamp(5px, 0.6vw, 11px) !important;
+		line-height: 1.4 !important;
+		white-space: normal !important;
+		/* allow wrapping */
+		position: absolute;
+		top: 15px;
+		right: 1px;
+	}
+
+
+	.ytp-fullscreen-grid-active.html5-video-player.ended-mode:not(.ytp-enable-horizontal-endscreen-shelf) .ytp-modern-videowall-still:nth-child(n+4)/*<- Controls the number of videos on end screen */
+	{
+		display: grid;
+	}
+
+	.ytp-fullscreen-grid-active.html5-video-player.ended-mode .ytp-fullscreen-grid-stills-container {
+		width: 55%;
+	}
+	/* FULLSCREEN OVERRIDES */
+	/* End Card Video Suggestions End */
+	.yt-spec-button-shape-next--size-m {
+		border-radius: 2px;
+	}
+
+	.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled {
+		color: #f1f1f1;
+		background: #e62117;
+	}
+
+	.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled:hover {
+		color: #f1f1f1;
+		background: #cc181e;
+	}
+
+	#sponsor-button.style-scope.ytd-video-owner-renderer timed-animation-button-renderer.ytwTimedAnimationButtonRendererHost yt-smartimation.smartimation.smartimation--enable-masking div.smartimation__content ytd-button-renderer yt-button-shape button.yt-spec-button-shape-next.yt-spec-button-shape-next--filled.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--enable-backdrop-filter-experiment {
+		background-color: rgba(255, 255, 255, 0.15);
+	}
+
+	#sponsor-button.style-scope.ytd-video-owner-renderer timed-animation-button-renderer.ytwTimedAnimationButtonRendererHost yt-smartimation.smartimation.smartimation--enable-masking div.smartimation__content ytd-button-renderer yt-button-shape button.yt-spec-button-shape-next.yt-spec-button-shape-next--filled.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--enable-backdrop-filter-experiment:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-start {
+		border-radius: 2px 0px 0px 2px;
+	}
+
+	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-end {
+		border-radius: 0px 2px 2px 0px;
+	}
+
+	#ryd-bar {
+		background: #e62117 !important;
+		border-radius: 2px;
+	}
+
+	#ryd-bar-container {
+		background: #6b0d10 !important;
+		border-radius: 2px;
+	}
+
+	.ryd-tooltip-new-design {
+		bottom: -6px !important;
+	}
+
+	/* Modify like button in liked state */
+	button-view-model:has(button[aria-pressed="false"]) lottie-component.ytLottieComponentHost svg g g path {
+		fill: #909090;
+		d: path("M 0 -3.25 C 1.79368 -3.25 3.25 -1.79368 3.25 0 C 3.25 1.79368 1.79368 3.25 0 3.25 C -1.79368 3.25 -3.25 1.79368 -3.25 0 C -3.25 -1.79368 -1.79368 -3.25 0 -3.25 Z M 0.796 -9.995 C 2.588 -9.55 3.575 -7.7 3.148 -5.933 C 2.964 -5.171 2.755 -4.412 2.44 -3.456 C 2.125 -2.5 3.794 -2.138 2.635 0.451 C 1.747 2.435 -3.75 0.725 -2.728 -2.17 C -1.841 -4.681 -1.025 -7.05 -0.17 -9.473 C -0.02 -9.899 0.387 -10.096 0.796 -9.995 M -0.207 -2.46 C 0.266 -2.017 0.662 -2.007 1.326 -2.007 C 1.326 -2.007 6.616 -2.007 6.616 -2.007 C 7.465 -2.006 8.24 -1.527 8.619 -0.768 C 8.619 -0.768 8.798 -0.41 8.798 -0.41 C 9.2 0.393 8.942 1.369 8.198 1.869 C 8.074 1.952 8 2.091 8 2.24 C 8 2.24 8 2.309 8 2.309 C 8 2.434 8.041 2.556 8.116 2.656 C 8.886 3.679 8.705 5.134 7.705 5.934 C 7.705 5.934 7.206 6.332 7.206 6.332 C 7.082 6.431 7.033 6.598 7.083 6.748 C 7.083 6.748 7.153 6.954 7.153 6.954 C 7.37 7.608 7.253 8.326 6.84 8.877 C 6.311 9.582 5.481 9.998 4.6 9.997 C 4.6 9.997 0.687 9.995 0.687 9.995 C -1.401 9.994 -3.453 9.448 -5.265 8.411 C -5.265 8.411 -5.538 8.256 -5.538 8.256 C -5.84 8.083 -6.183 7.992 -6.531 7.992 C -6.531 7.992 -9 7.992 -9 7.992 C -9.552 7.992 -10 7.544 -10 6.992 C -10 6.992 -10 0.995 -10 0.995 C -10 0.442 -9.551 -0.006 -8.998 -0.005 C -8.998 -0.005 -6.211 0 -6.211 0 C -5.785 0.001 -5.406 -0.268 -5.265 -0.67 C -5.265 -0.67 -5.059 -0.833 -4.901 -1.275 C -4.301 -2.95 -0.859 -3.217 -0.207 -2.46 Z");
+	}
+
+	/* Modify like button in liked state */
+	button-view-model:has(button[aria-pressed="true"]) lottie-component.ytLottieComponentHost svg g g path {
+		fill: #e62117;
+	}
+
+	/* Modify dislike button in unliked state */
+	button-view-model:has(button[aria-pressed="false"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
+		fill: #909090;
+		d: path("M 11.313 2.002 c 2.088 0 4.14 0.546 5.953 1.583 l 0.273 0.156 a 2 2 0 0 0 0.993 0.264 H 21 a 1 1 0 0 1 1 1 V 11 a 1 1 0 0 1 -1.002 1 l -2.787 -0.005 a 1 1 0 0 0 -0.946 0.67 l -3.02 8.628 a 0.815 0.815 0 0 1 -0.966 0.522 a 3.262 3.262 0 0 1 -2.35 -4.062 l 0.707 -2.477 a 1 1 0 0 0 -0.961 -1.274 h -5.29 a 2.24 2.24 0 0 1 -2.004 -1.238 l -0.18 -0.359 a 1.784 1.784 0 0 1 0.601 -2.278 a 0.446 0.446 0 0 0 0.198 -0.37 v -0.07 a 0.578 0.578 0 0 0 -0.116 -0.347 a 2.374 2.374 0 0 1 0.412 -3.278 l 0.498 -0.399 a 0.379 0.379 0 0 0 0.123 -0.415 l -0.07 -0.207 a 2.1 2.1 0 0 1 0.313 -1.923 A 2.798 2.798 0 0 1 7.4 2 l 3.913 0.002 Z");
+	}
+
+	/* Modify the dislike button in liked state  */
+	button-view-model:has(button[aria-pressed="true"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
+		fill: #e62117;
+	}
+
+	animated-thumbnail-overlay-view-model:has(img) {
+		display: none !important;
+	}
+
+	button-view-model:has(button[aria-label="Watch later"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
+		fill: #f1f1f1 !important;
+		d: path("M 12 1 C 5.925 1 1 5.925 1 12 s 4.925 11 11 11 s 11 -4.925 11 -11 S 18.075 1 12 1 Z m 0 2 a 9 9 0 1 1 0 18.001 A 9 9 0 0 1 12 3 Z m 0 3 a 1 1 0 0 0 -1 1 v 5.565 l 0.485 0.292 l 3.33 2 a 1 1 0 0 0 1.03 -1.714 L 13 11.435 V 7 a 1 1 0 0 0 -1 -1 Z") !important;
+	}
+
+	button-view-model:has(button[aria-label="Add to queue"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
+		fill: #f1f1f1 !important;
+		d: path("M 2 2.864 v 6.277 a 0.5 0.5 0 0 0 0.748 0.434 L 9 6.002 L 2.748 2.43 A 0.5 0.5 0 0 0 2 2.864 Z M 21 5 h -9 a 1 1 0 1 0 0 2 h 9 a 1 1 0 1 0 0 -2 Z m 0 6 H 9 a 1 1 0 0 0 0 2 h 12 a 1 1 0 0 0 0 -2 Z m 0 6 H 9 a 1 1 0 0 0 0 2 h 12 a 1 1 0 0 0 0 -2 Z") !important;
+	}
+
+	.ytVideoMetadataCarouselViewModelHost {
+		border-radius: 3px;
+	}
+
+	.ytVideoMetadataCarouselViewModelHost:hover {
+		background: rgba(255, 255, 255, .07);
+	}
+
+	#flexible-item-buttons.style-scope.ytd-menu-renderer {
+		display: none !important;
+	}
+
+	yt-img-shadow.ytd-topbar-menu-button-renderer {
+		border-radius: 7% !important;
+		box-shadow: 0px 0px 3px 1px #ffffff29;
+	}
+
+	#author-thumbnail.ytd-comment-simplebox-renderer {
+		border-radius: 7% !important;
+		box-shadow: 0px 0px 3px 1px #ffffff12;
+	}
+
+	/* Hide bell graphics but keep it clickable underneath */
+	ytd-subscribe-button-renderer[subscribed] yt-button-shape,
+	ytd-subscribe-button-renderer[subscribed] tp-yt-paper-tooltip {
+		opacity: 0 !important;
+	}
+
+	/* Overlay Unsubscribe text */
+	ytd-subscribe-button-renderer[subscribed]:after {
+		content: "Unsubscribe";
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background-color: #e62117;
+		color: white;
+		font-weight: 500;
+		font-size: 14px;
+		padding: 0px 16px;
+		border-radius: 2px;
+		cursor: pointer;
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		/* allows clicks to fall through to bell button */
+	}
+
+	ytd-subscribe-button-renderer[subscribed]:hover:after {
+		background: #cc181e;
+	}
+
+	/* Ensure parent can position absolute children */
+	ytd-subscribe-button-renderer[subscribed] {
+		position: relative !important;
+	}
+
+	ytd-subscribe-button-renderer[subscribed],
+	ytd-subscription-notification-toggle-button-renderer {
+		min-width: 98px !important;
+	}
+
+	yt-smartimation:has(ytd-subscription-notification-toggle-button-renderer-next) {
+		width: 100%;
+		height: 100%;
+	}
+
+	ytd-watch-metadata[description-collapsed] #description.ytd-watch-metadata {
+		border-radius: 2px;
+	}
+
+	.fill.yt-interaction,
+	.stroke.yt-interaction {
+		border-radius: 2px !important;
+	}
+
+	.ryd-tooltip-bar-container {
+		top: -4px !important;
+		width: 100% !important;
+	}
+
+	ytd-rich-metadata-renderer[rounded] {
+		border-radius: 3px;
+	}
+	
+	.yt-simple-endpoint:hover {
+		background-color: rgba(255, 255, 255, 0.1) !important;
+	}
+
+	#avatar.ytd-video-owner-renderer {
+		border-radius: 7%;
+		box-shadow: 0px 0px 3px 1px #ffffff29;
+		margin-left: 2px;
+	}
+
+
+	ytd-watch-metadata:not([description-collapsed]) #description.ytd-watch-metadata {
+		border-radius: 3px;
+	}
+	
+	ytd-author-comment-badge-renderer[creator] {
+		border-radius: 2px !important;
+	}
+}
