@@ -1,4 +1,4 @@
-# Before you begin
+# Before You Begin
 This theme and Stylus by extension requires either Firefox or Chrome.
 
 The Stylus extension is free and open-source web extension that enables easy editing of website CSS and JavaScript.
