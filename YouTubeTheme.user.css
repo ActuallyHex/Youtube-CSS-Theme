@@ -201,6 +201,12 @@
 		background: #cc181e;
 	}
 
+	/* Channel page specific hover preview removal */
+	#mouseover-overlay.style-scope.ytd-thumbnail,
+	#hover-overlays.style-scope.ytd-thumbnail {
+		display: none !important;
+		pointer-events: none !important;
+	}
 
 	/*****************************************
  	** MISC UI CLEANUP / RADIUS FIXES
@@ -251,8 +257,29 @@
 	#voice-search-button.ytd-masthead {
 		border-radius: 3px;
 	}
+	
+	/* Notification button */
+	ytd-notification-topbar-button-renderer.ytd-masthead {
+		border-radius: 3px;
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+	
+	ytd-notification-topbar-button-renderer.ytd-masthead:hover {
+		border-radius: 3px;
+		background: rgba(255, 255, 255, .2);
+	}
+	
+	yt-icon-button.ytd-notification-topbar-button-renderer {
+		width: 35px !important;
+  		height: 37px !important;
+	}
 
-
+	/* User Profile Icon */
+	yt-img-shadow.ytd-topbar-menu-button-renderer {
+		border-radius: 7%;
+		box-shadow: 0px 0px 3px 1px #ffffff29;
+	}
+	
 	#content.ytd-rich-item-renderer:has(ytd-feed-nudge-renderer) {
 		display: none !important;
 		width: 0% !important;
@@ -336,8 +363,7 @@
 		width: 0 !important;
 		height: 0 !important;
 	}
-	
-
+		
 	/*****************************************
  	** Home Page Sub Type
  	******************************************/
@@ -731,8 +757,7 @@ regexp("https?://www.youtube.com/live.*") {
 		top: 15px;
 		right: 1px;
 	}
-
-
+	
 	.ytp-fullscreen-grid-active.html5-video-player.ended-mode:not(.ytp-enable-horizontal-endscreen-shelf) .ytp-modern-videowall-still:nth-child(n+4)/*<- Controls the number of videos on end screen */
 	{
 		display: grid;
@@ -787,42 +812,28 @@ regexp("https?://www.youtube.com/live.*") {
 		bottom: -6px !important;
 	}
 
-	/* Modify like button in liked state */
-	button-view-model:has(button[aria-pressed="false"]) lottie-component.ytLottieComponentHost svg g g path {
-		fill: #909090;
+	like-button-view-model:has(button[aria-pressed="false"]) lottie-component.ytLottieComponentHost svg g g path 	 {
+		fill: #ffffffcf;
 		d: path("M 0 -3.25 C 1.79368 -3.25 3.25 -1.79368 3.25 0 C 3.25 1.79368 1.79368 3.25 0 3.25 C -1.79368 3.25 -3.25 1.79368 -3.25 0 C -3.25 -1.79368 -1.79368 -3.25 0 -3.25 Z M 0.796 -9.995 C 2.588 -9.55 3.575 -7.7 3.148 -5.933 C 2.964 -5.171 2.755 -4.412 2.44 -3.456 C 2.125 -2.5 3.794 -2.138 2.635 0.451 C 1.747 2.435 -3.75 0.725 -2.728 -2.17 C -1.841 -4.681 -1.025 -7.05 -0.17 -9.473 C -0.02 -9.899 0.387 -10.096 0.796 -9.995 M -0.207 -2.46 C 0.266 -2.017 0.662 -2.007 1.326 -2.007 C 1.326 -2.007 6.616 -2.007 6.616 -2.007 C 7.465 -2.006 8.24 -1.527 8.619 -0.768 C 8.619 -0.768 8.798 -0.41 8.798 -0.41 C 9.2 0.393 8.942 1.369 8.198 1.869 C 8.074 1.952 8 2.091 8 2.24 C 8 2.24 8 2.309 8 2.309 C 8 2.434 8.041 2.556 8.116 2.656 C 8.886 3.679 8.705 5.134 7.705 5.934 C 7.705 5.934 7.206 6.332 7.206 6.332 C 7.082 6.431 7.033 6.598 7.083 6.748 C 7.083 6.748 7.153 6.954 7.153 6.954 C 7.37 7.608 7.253 8.326 6.84 8.877 C 6.311 9.582 5.481 9.998 4.6 9.997 C 4.6 9.997 0.687 9.995 0.687 9.995 C -1.401 9.994 -3.453 9.448 -5.265 8.411 C -5.265 8.411 -5.538 8.256 -5.538 8.256 C -5.84 8.083 -6.183 7.992 -6.531 7.992 C -6.531 7.992 -9 7.992 -9 7.992 C -9.552 7.992 -10 7.544 -10 6.992 C -10 6.992 -10 0.995 -10 0.995 C -10 0.442 -9.551 -0.006 -8.998 -0.005 C -8.998 -0.005 -6.211 0 -6.211 0 C -5.785 0.001 -5.406 -0.268 -5.265 -0.67 C -5.265 -0.67 -5.059 -0.833 -4.901 -1.275 C -4.301 -2.95 -0.859 -3.217 -0.207 -2.46 Z");
 	}
-
-	/* Modify like button in liked state */
-	button-view-model:has(button[aria-pressed="true"]) lottie-component.ytLottieComponentHost svg g g path {
+	
+	like-button-view-model:has(button[aria-pressed="true"]) lottie-component.ytLottieComponentHost svg g g path 	{
 		fill: #e62117;
 	}
-
-	/* Modify dislike button in unliked state */
-	button-view-model:has(button[aria-pressed="false"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
-		fill: #909090;
+	
+	dislike-button-view-model:has(button[aria-pressed="false"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
+		fill: #ffffffcf;
 		d: path("M 11.313 2.002 c 2.088 0 4.14 0.546 5.953 1.583 l 0.273 0.156 a 2 2 0 0 0 0.993 0.264 H 21 a 1 1 0 0 1 1 1 V 11 a 1 1 0 0 1 -1.002 1 l -2.787 -0.005 a 1 1 0 0 0 -0.946 0.67 l -3.02 8.628 a 0.815 0.815 0 0 1 -0.966 0.522 a 3.262 3.262 0 0 1 -2.35 -4.062 l 0.707 -2.477 a 1 1 0 0 0 -0.961 -1.274 h -5.29 a 2.24 2.24 0 0 1 -2.004 -1.238 l -0.18 -0.359 a 1.784 1.784 0 0 1 0.601 -2.278 a 0.446 0.446 0 0 0 0.198 -0.37 v -0.07 a 0.578 0.578 0 0 0 -0.116 -0.347 a 2.374 2.374 0 0 1 0.412 -3.278 l 0.498 -0.399 a 0.379 0.379 0 0 0 0.123 -0.415 l -0.07 -0.207 a 2.1 2.1 0 0 1 0.313 -1.923 A 2.798 2.798 0 0 1 7.4 2 l 3.913 0.002 Z");
 	}
-
-	/* Modify the dislike button in liked state  */
-	button-view-model:has(button[aria-pressed="true"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
-		fill: #e62117;
+	
+	dislike-button-view-model:has(button[aria-pressed="true"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
+			fill: #e62117;
 	}
-
+	
 	animated-thumbnail-overlay-view-model:has(img) {
 		display: none !important;
 	}
-
-	button-view-model:has(button[aria-label="Watch later"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
-		fill: #f1f1f1 !important;
-		d: path("M 12 1 C 5.925 1 1 5.925 1 12 s 4.925 11 11 11 s 11 -4.925 11 -11 S 18.075 1 12 1 Z m 0 2 a 9 9 0 1 1 0 18.001 A 9 9 0 0 1 12 3 Z m 0 3 a 1 1 0 0 0 -1 1 v 5.565 l 0.485 0.292 l 3.33 2 a 1 1 0 0 0 1.03 -1.714 L 13 11.435 V 7 a 1 1 0 0 0 -1 -1 Z") !important;
-	}
-
-	button-view-model:has(button[aria-label="Add to queue"]) span.yt-icon-shape.ytSpecIconShapeHost div svg path {
-		fill: #f1f1f1 !important;
-		d: path("M 2 2.864 v 6.277 a 0.5 0.5 0 0 0 0.748 0.434 L 9 6.002 L 2.748 2.43 A 0.5 0.5 0 0 0 2 2.864 Z M 21 5 h -9 a 1 1 0 1 0 0 2 h 9 a 1 1 0 1 0 0 -2 Z m 0 6 H 9 a 1 1 0 0 0 0 2 h 12 a 1 1 0 0 0 0 -2 Z m 0 6 H 9 a 1 1 0 0 0 0 2 h 12 a 1 1 0 0 0 0 -2 Z") !important;
-	}
-
+	
 	.ytVideoMetadataCarouselViewModelHost {
 		border-radius: 3px;
 	}
