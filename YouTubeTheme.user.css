@@ -1172,10 +1172,48 @@ regexp("https?://www.youtube.com/live.*") {
 		transform: translate(-50%, -50%);
 	}
 
-	
 	yt-touch-feedback-shape.yt-spec-touch-feedback-shape.yt-spec-touch-feedback-shape--touch-response.yt-spec-touch-feedback-shape--thumbnail-size-medium.yt-spec-touch-feedback-shape--trigger-events.yt-spec-touch-feedback-shape--hovered {
-	background: rgba(255, 255, 255, .07);
-	transition: background 0.18s ease;
-}
+		background: rgba(255, 255, 255, .07);
+		transition: background 0.18s ease;
+		border-radius: 2px;
+	}
+
+	#page-manager.style-scope.ytd-app ytd-watch-flexy.style-scope.ytd-page-manager.watch-root-element.hide-skeleton div#columns.style-scope.ytd-watch-flexy div#secondary.style-scope.ytd-watch-flexy div#secondary-inner.style-scope.ytd-watch-flexy div#related.style-scope.ytd-watch-flexy ytd-watch-next-secondary-results-renderer.style-scope.ytd-watch-flexy div#items.style-scope.ytd-watch-next-secondary-results-renderer ytd-item-section-renderer.style-scope.ytd-watch-next-secondary-results-renderer div#contents.style-scope.ytd-item-section-renderer ytd-compact-video-renderer.style-scope.ytd-item-section-renderer:has([id="dismissible"]) {
+		display: none !important;
+	}
+
+	#page-manager.style-scope.ytd-app ytd-watch-flexy.style-scope.ytd-page-manager.watch-root-element.hide-skeleton div#columns.style-scope.ytd-watch-flexy div#secondary.style-scope.ytd-watch-flexy div#secondary-inner.style-scope.ytd-watch-flexy div#related.style-scope.ytd-watch-flexy ytd-watch-next-secondary-results-renderer.style-scope.ytd-watch-flexy div#items.style-scope.ytd-watch-next-secondary-results-renderer ytd-item-section-renderer.style-scope.ytd-watch-next-secondary-results-renderer div#contents.style-scope.ytd-item-section-renderer ytd-channel-renderer.style-scope.ytd-item-section-renderer {
+		display: none !important;
+	}
+
+	#like-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="false"]) .ytSpecIconShapeHost div svg path {
+		color: #ffffff70;
+		d: path("M 10.72 2.18 a 3.263 3.263 0 0 1 2.352 4.063 l -0.708 2.476 a 1 1 0 0 0 0.962 1.275 h 5.29 c 0.848 0 1.624 0.48 2.003 1.238 l 0.179 0.359 a 1.785 1.785 0 0 1 -0.6 2.279 a 0.446 0.446 0 0 0 -0.198 0.37 v 0.07 c 0 0.124 0.041 0.246 0.116 0.346 a 2.375 2.375 0 0 1 -0.41 3.278 l -0.5 0.399 a 0.38 0.38 0 0 0 -0.123 0.416 l 0.07 0.206 c 0.217 0.653 0.1 1.372 -0.313 1.923 a 2.8 2.8 0 0 1 -2.24 1.12 l -3.914 -0.002 a 12 12 0 0 1 -5.952 -1.584 l -0.272 -0.155 a 2.002 2.002 0 0 0 -0.993 -0.265 H 3 a 1 1 0 0 1 -1 -1 v -5.996 a 1 1 0 0 1 1.002 -1 L 5.789 12 a 1 1 0 0 0 0.945 -0.67 l 3.02 -8.628 a 0.816 0.816 0 0 1 0.967 -0.523 Z");
+	}
+	
+		#like-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="true"]) .ytSpecIconShapeHost div svg path {
+		color: #3097e8;
+			
+	}
+	
+		#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="false"]) .ytSpecIconShapeHost div svg path {
+		color: #ffffff70;
+		d: path("M 11.313 2.002 c 2.088 0 4.14 0.546 5.953 1.583 l 0.273 0.156 a 2 2 0 0 0 0.993 0.264 H 21 a 1 1 0 0 1 1 1 V 11 a 1 1 0 0 1 -1.002 1 l -2.787 -0.005 a 1 1 0 0 0 -0.946 0.67 l -3.02 8.628 a 0.815 0.815 0 0 1 -0.966 0.522 a 3.262 3.262 0 0 1 -2.35 -4.062 l 0.707 -2.477 a 1 1 0 0 0 -0.961 -1.274 h -5.29 a 2.24 2.24 0 0 1 -2.004 -1.238 l -0.18 -0.359 a 1.784 1.784 0 0 1 0.601 -2.278 a 0.446 0.446 0 0 0 0.198 -0.37 v -0.07 a 0.578 0.578 0 0 0 -0.116 -0.347 a 2.374 2.374 0 0 1 0.412 -3.278 l 0.498 -0.399 a 0.379 0.379 0 0 0 0.123 -0.415 l -0.07 -0.207 a 2.1 2.1 0 0 1 0.313 -1.923 A 2.798 2.798 0 0 1 7.4 2 l 3.913 0.002 Z");
+	}
+	
+			#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="true"]) .ytSpecIconShapeHost div svg path {
+		color: #3097e8;
+	}
+	
+	
+	#author-comment-badge.style-scope.ytd-comment-view-model ytd-author-comment-badge-renderer.style-scope.ytd-comment-view-model {
+		--yt-basic-background-color: rgba(136,136,136,1.000);
+  		--yt-basic-foreground-title-color: rgba(255,255,255,1.000);
+	}
+	
+	#name.ytd-author-comment-badge-renderer {
+		--ytd-channel-name-text-display: block;
+  		color: rgba(136,136,136,1.000);
+	}
 	
 }
