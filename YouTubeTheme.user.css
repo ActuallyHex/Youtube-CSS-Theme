@@ -8,12 +8,12 @@
 @-moz-document url-prefix("https://www.youtube.com/") {
 
 	/*****************************************
- 	** 0. BRANDING / CUSTOM LABELS
+ 	** BRANDING / CUSTOM LABELS
  	******************************************/
 	/* Footer Tag */
 	#copyright div::after {
 		white-space: pre;
-		content: "\aYoutube Unsloppified";
+		content: "\aYoutube Unsloppified v1.0.0";
 	}
 
 	/* "Unsloppified" next to YouTube logo */
@@ -68,6 +68,14 @@
 	ytd-rich-item-renderer:has(.badge-style-type-members-only) {
 		display: none !important;
 	}
+	
+	[class*="ytdChipsShelfWithVideoShelfRendererHeader"] {
+		display: none !important;
+	}
+	
+	 #content.style-scope.ytd-rich-section-renderer {
+		display: none !important;
+	}
 
 	/* Hide “Ask for videos any way you like BETA” */
 	[class*="ytdTalkToRecsFlowRendererFlowContent"] {
@@ -76,11 +84,20 @@
 
 
 	/* Hide Premium tab in guide bar */
+	[class*="ytd-guide-renderer"]:has([href*="/premium"]):nth-child(4) {
+		display: none !important;
+	}
+	
 	[class*="ytd-guide-renderer"]:has([href*="/premium"]):nth-child(5) {
 		display: none !important;
 	}
 
 	/* Hide Explore section in guide bar */
+	[class*="ytd-guide-renderer"]:has([href="/channel/UCkYQyvc_i9hXEo4xic9Hh2g"]):nth-child(3) {
+		display: none !important;
+	}
+	
+		/* Hide Explore section in guide bar */
 	[class*="ytd-guide-renderer"]:has([href="/channel/UCkYQyvc_i9hXEo4xic9Hh2g"]):nth-child(4) {
 		display: none !important;
 	}
@@ -90,6 +107,7 @@
 	ytd-guide-entry-renderer[line-end-style="dot"] {
 		display: none !important;
 	}
+
 
 	a[title="Show more"] {
 		display: none !important;
@@ -303,6 +321,10 @@
 	yt-icon-button.ytd-notification-topbar-button-renderer {
 		width: 35px !important;
 		height: 37px !important;
+	}
+	
+	.yt-spec-icon-badge-shape--type-notification .yt-spec-icon-badge-shape__badge {
+		border-radius: 5px;
 	}
 
 	/* User Profile Icon */
@@ -673,8 +695,7 @@ regexp("https?://www.youtube.com/live.*") {
 		row-gap: 220px;
 		column-gap: 0px;
 	}
-
-
+	
 	.ytp-modern-videowall-still {
 		padding-bottom: 60%;
 		transform: translateX(13px) translateY(10px);
@@ -1122,55 +1143,72 @@ regexp("https?://www.youtube.com/live.*") {
 		text-overflow: ellipsis !important;
 	}
 
-	/* "New" video badge theme */
-	/* Reset metadata row behavior */
+	/* Don't move the metadata row around (this causes drifting) */
 	.yt-content-metadata-view-model__metadata-row--metadata-row-wrap {
-		margin-top: 0 !important;
+		position: static !important;
+		top: auto !important;
+		left: auto !important;
+		transform: none !important;
+	}
+	
+	/* Fade in the touch-feedback container (the "hit box") */
+	ytd-rich-item-renderer:hover .yt-lockup-metadata-view-model__menu-button yt-touch-feedback-shape {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease-in-out;
 	}
 
-	/* Main wrapper — stable and centered */
-	.yt-content-metadata-view-model__badge {
-		display: flex !important;
-		justify-content: center !important;
-		align-items: center !important;
+	.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--text:hover {
+		background: rgba(255, 255, 255, .07);
+	}
 
+	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
+		width: 20px;
+		height: 30px;
+	}
+	
+	.yt-lockup-metadata-view-model__menu-button {
+		right: -2px;
+		top: -3px;
+	}
+
+	/* Make sure the video card / thumbnail container is the anchor */
+	ytd-rich-item-renderer,
+	ytd-video-renderer,
+	ytd-compact-video-renderer,
+	ytd-rich-grid-media {
 		position: relative !important;
-		padding: 5px 4px !important;
-		overflow: visible !important;
 	}
 
-	/* Hide all internal badge stuff */
+	/* Hide the internal default badge UI */
 	.yt-content-metadata-view-model__badge badge-shape,
 	.yt-content-metadata-view-model__badge yt-badge-view-model {
-		all: unset !important;
+		display: none !important;
 	}
 
-	/* Inject your new badge shape (LIVE-style pill) */
+	/* Create your custom NEW pill */
 	.yt-content-metadata-view-model__badge::after {
 		content: "NEW";
-		display: inline-flex;
-		justify-content: center;
-		align-items: center;
+		position: absolute;
 
-		padding: 1.1px 3px;
-		/* Match LIVE badge */
-		font-size: 9.1px;
+		/* TOP LEFT of the card */
+		top: 5px;
+		left: -172px;
+
+		padding: 2px 4px;
+		font-size: 9.5px;
 		font-weight: 600;
 		letter-spacing: 0.3px;
 
 		background-color: #cc181e;
 		color: white;
-		border-radius: 2px;
+		border-radius: 3px;
+		box-shadow: 0 0 4px rgb(255, 255, 255);
 
-		/* Slight shadow so it pops like LIVE */
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-
-		/* Always centered */
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+		z-index: 9999;
+		pointer-events: none;
 	}
+
 
 	yt-touch-feedback-shape.yt-spec-touch-feedback-shape.yt-spec-touch-feedback-shape--touch-response.yt-spec-touch-feedback-shape--thumbnail-size-medium.yt-spec-touch-feedback-shape--trigger-events.yt-spec-touch-feedback-shape--hovered {
 		background: rgba(255, 255, 255, .07);
@@ -1190,30 +1228,28 @@ regexp("https?://www.youtube.com/live.*") {
 		color: #ffffff70;
 		d: path("M 10.72 2.18 a 3.263 3.263 0 0 1 2.352 4.063 l -0.708 2.476 a 1 1 0 0 0 0.962 1.275 h 5.29 c 0.848 0 1.624 0.48 2.003 1.238 l 0.179 0.359 a 1.785 1.785 0 0 1 -0.6 2.279 a 0.446 0.446 0 0 0 -0.198 0.37 v 0.07 c 0 0.124 0.041 0.246 0.116 0.346 a 2.375 2.375 0 0 1 -0.41 3.278 l -0.5 0.399 a 0.38 0.38 0 0 0 -0.123 0.416 l 0.07 0.206 c 0.217 0.653 0.1 1.372 -0.313 1.923 a 2.8 2.8 0 0 1 -2.24 1.12 l -3.914 -0.002 a 12 12 0 0 1 -5.952 -1.584 l -0.272 -0.155 a 2.002 2.002 0 0 0 -0.993 -0.265 H 3 a 1 1 0 0 1 -1 -1 v -5.996 a 1 1 0 0 1 1.002 -1 L 5.789 12 a 1 1 0 0 0 0.945 -0.67 l 3.02 -8.628 a 0.816 0.816 0 0 1 0.967 -0.523 Z");
 	}
-	
-		#like-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="true"]) .ytSpecIconShapeHost div svg path {
+
+	#like-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="true"]) .ytSpecIconShapeHost div svg path {
 		color: #3097e8;
-			
 	}
-	
-		#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="false"]) .ytSpecIconShapeHost div svg path {
+
+	#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="false"]) .ytSpecIconShapeHost div svg path {
 		color: #ffffff70;
 		d: path("M 11.313 2.002 c 2.088 0 4.14 0.546 5.953 1.583 l 0.273 0.156 a 2 2 0 0 0 0.993 0.264 H 21 a 1 1 0 0 1 1 1 V 11 a 1 1 0 0 1 -1.002 1 l -2.787 -0.005 a 1 1 0 0 0 -0.946 0.67 l -3.02 8.628 a 0.815 0.815 0 0 1 -0.966 0.522 a 3.262 3.262 0 0 1 -2.35 -4.062 l 0.707 -2.477 a 1 1 0 0 0 -0.961 -1.274 h -5.29 a 2.24 2.24 0 0 1 -2.004 -1.238 l -0.18 -0.359 a 1.784 1.784 0 0 1 0.601 -2.278 a 0.446 0.446 0 0 0 0.198 -0.37 v -0.07 a 0.578 0.578 0 0 0 -0.116 -0.347 a 2.374 2.374 0 0 1 0.412 -3.278 l 0.498 -0.399 a 0.379 0.379 0 0 0 0.123 -0.415 l -0.07 -0.207 a 2.1 2.1 0 0 1 0.313 -1.923 A 2.798 2.798 0 0 1 7.4 2 l 3.913 0.002 Z");
 	}
-	
-			#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="true"]) .ytSpecIconShapeHost div svg path {
+
+	#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="true"]) .ytSpecIconShapeHost div svg path {
 		color: #3097e8;
 	}
-	
-	
+
+
 	#author-comment-badge.style-scope.ytd-comment-view-model ytd-author-comment-badge-renderer.style-scope.ytd-comment-view-model {
-		--yt-basic-background-color: rgba(136,136,136,1.000);
-  		--yt-basic-foreground-title-color: rgba(255,255,255,1.000);
+		--yt-basic-background-color: rgba(136, 136, 136, 1.000);
+		--yt-basic-foreground-title-color: rgba(255, 255, 255, 1.000);
 	}
-	
+
 	#name.ytd-author-comment-badge-renderer {
 		--ytd-channel-name-text-display: block;
-  		color: rgba(136,136,136,1.000);
+		color: rgba(136, 136, 136, 1.000);
 	}
-	
 }
