@@ -1,3 +1,7 @@
+# Preview
+![beforeafterytedit](https://github.com/user-attachments/assets/f415355a-eb99-45cf-84fe-d0390cc6ad5a)
+
+
 # Before You Begin
 This theme and Stylus by extension requires either Firefox or Chrome.
 
