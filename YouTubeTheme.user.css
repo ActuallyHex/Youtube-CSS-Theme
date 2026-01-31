@@ -5,7 +5,7 @@
 @description    An extension that "Unsloppifies" YouTube.
 @author         Hex!
 ==/UserStyle== */
-@-moz-document url-prefix("https://www.youtube.com/") {
+@-moz-document url-prefix("https://www.youtube.com") {
 
 	/*****************************************
  	** BRANDING / CUSTOM LABELS
@@ -13,7 +13,7 @@
 	/* Footer Tag */
 	#copyright div::after {
 		white-space: pre;
-		content: "\aYoutube Unsloppified v1.0.1";
+		content: "\aYoutube Unsloppified v1.0.2";
 	}
 
 	/* "Unsloppified" next to YouTube logo */
@@ -24,12 +24,27 @@
 		color: #fff6;
 		background: #0000 !important;
 		display: inline-block;
-		margin-left: -10px;
+		margin-left: -8px;
 		position: relative;
 		top: 5px;
 		pointer-events: none;
 		white-space: nowrap;
-		padding-right: 5px;
+		padding-right: 33px;
+	}
+
+	ytd-masthead #start ytd-topbar-logo-renderer::after {
+		content: "v1.0.2";
+		font-size: 1.05rem;
+		font-weight: 550;
+		color: #fff6;
+		background: #0000 !important;
+		display: inline-block;
+		margin-left: -20px;
+		letter-spacing: -0.2px;
+		position: relative;
+		top: 26px;
+		pointer-events: none;
+		white-space: nowrap;
 	}
 
 	.style-scope.ytd-logo {
@@ -499,11 +514,6 @@
 			pointer-events: none !important;
 		}
 
-		.yt-lockup-view-model--vertical.yt-lockup-view-model--rich-grid-legacy-margin .yt-lockup-view-model__content-image {
-			/*pointer-events: none !important;*/
-		}
-
-
 		ytd-rich-section-renderer #content.style-scope.ytd-rich-section-renderer {
 			font-size: 0 !important;
 			position: relative;
@@ -521,6 +531,12 @@
 			font-weight: 700;
 		}
 	}
+
+
+	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
+		width: 15px;
+	}
+
 
 	/*****************************************
  	** Subscriptions Sub Type
@@ -620,11 +636,6 @@
 			background: rgba(255, 255, 255, .07);
 		}
 
-		.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
-			width: 20px;
-			height: 30px;
-		}
-
 		.yt-lockup-metadata-view-model__menu-button {
 			right: 0;
 			top: -2px;
@@ -638,6 +649,21 @@ regexp("https?://www.youtube.com/clip.*"),
 regexp("https?://www.youtube.com/embed.*"),
 regexp("https?://www.youtube.com/live.*") {
 
+
+	ytd-masthead #start ytd-topbar-logo-renderer::after {
+		content: "v1.0.2";
+		font-size: 1.05rem;
+		font-weight: 550;
+		color: #fff6;
+		background: #0000 !important;
+		display: inline-block;
+		margin-left: -30px;
+		letter-spacing: -0.2px;
+		position: relative;
+		top: 26px;
+		pointer-events: none;
+		white-space: nowrap;
+	}
 
 	#country-code.ytd-topbar-logo-renderer {
 		display: none !important;
