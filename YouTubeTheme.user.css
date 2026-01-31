@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           YouTube Unsloppified
 @namespace      YouTube unsloppified
-@version        1.0.0
+@version        1.0.1
 @description    An extension that "Unsloppifies" YouTube.
 @author         Hex!
 ==/UserStyle== */
@@ -13,7 +13,7 @@
 	/* Footer Tag */
 	#copyright div::after {
 		white-space: pre;
-		content: "\aYoutube Unsloppified v1.0.0";
+		content: "\aYoutube Unsloppified v1.0.1";
 	}
 
 	/* "Unsloppified" next to YouTube logo */
@@ -68,12 +68,12 @@
 	ytd-rich-item-renderer:has(.badge-style-type-members-only) {
 		display: none !important;
 	}
-	
+
 	[class*="ytdChipsShelfWithVideoShelfRendererHeader"] {
 		display: none !important;
 	}
-	
-	 #content.style-scope.ytd-rich-section-renderer {
+
+	#content.style-scope.ytd-rich-section-renderer {
 		display: none !important;
 	}
 
@@ -87,7 +87,7 @@
 	[class*="ytd-guide-renderer"]:has([href*="/premium"]):nth-child(4) {
 		display: none !important;
 	}
-	
+
 	[class*="ytd-guide-renderer"]:has([href*="/premium"]):nth-child(5) {
 		display: none !important;
 	}
@@ -96,8 +96,8 @@
 	[class*="ytd-guide-renderer"]:has([href="/channel/UCkYQyvc_i9hXEo4xic9Hh2g"]):nth-child(3) {
 		display: none !important;
 	}
-	
-		/* Hide Explore section in guide bar */
+
+	/* Hide Explore section in guide bar */
 	[class*="ytd-guide-renderer"]:has([href="/channel/UCkYQyvc_i9hXEo4xic9Hh2g"]):nth-child(4) {
 		display: none !important;
 	}
@@ -322,7 +322,7 @@
 		width: 35px !important;
 		height: 37px !important;
 	}
-	
+
 	.yt-spec-icon-badge-shape--type-notification .yt-spec-icon-badge-shape__badge {
 		border-radius: 5px;
 	}
@@ -487,11 +487,6 @@
 		.yt-lockup-view-model:hover .yt-lockup-metadata-view-model__menu-button {
 			opacity: 1;
 			pointer-events: auto;
-		}
-
-		.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
-			width: 20px;
-			height: 30px;
 		}
 
 		.yt-lockup-metadata-view-model__menu-button {
@@ -695,7 +690,7 @@ regexp("https?://www.youtube.com/live.*") {
 		row-gap: 220px;
 		column-gap: 0px;
 	}
-	
+
 	.ytp-modern-videowall-still {
 		padding-bottom: 60%;
 		transform: translateX(13px) translateY(10px);
@@ -842,12 +837,12 @@ regexp("https?://www.youtube.com/live.*") {
 		background-color: rgba(255, 255, 255, 0.1);
 	}
 
-	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-start {
-		border-radius: 2px 0px 0px 2px;
+	toggle-button-view-model button-view-model.ytSpecButtonViewModelHost button.yt-spec-button-shape-next.yt-spec-button-shape-next--tonal.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading.yt-spec-button-shape-next--segmented-start {
+		border-radius: 2px 0px 0px 2px !important;
 	}
 
 	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-end {
-		border-radius: 0px 2px 2px 0px;
+		border-radius: 0px 2px 2px 0px !important;
 	}
 
 	#ryd-bar {
@@ -1095,6 +1090,10 @@ regexp("https?://www.youtube.com/live.*") {
 		inset: 0 0 0 0;
 	}
 
+	.ytp-delhi-modern .ytp-chrome-controls .ytp-right-controls .ytp-button::before {
+		border-radius: 2px;
+	}
+
 	/* Video Title */
 	#video-title,
 	.yt-lockup-metadata-view-model__title {
@@ -1150,7 +1149,7 @@ regexp("https?://www.youtube.com/live.*") {
 		left: auto !important;
 		transform: none !important;
 	}
-	
+
 	/* Fade in the touch-feedback container (the "hit box") */
 	ytd-rich-item-renderer:hover .yt-lockup-metadata-view-model__menu-button yt-touch-feedback-shape {
 		opacity: 0;
@@ -1162,11 +1161,25 @@ regexp("https?://www.youtube.com/live.*") {
 		background: rgba(255, 255, 255, .07);
 	}
 
-	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
+	div.yt-lockup-view-model__metadata yt-lockup-metadata-view-model.yt-lockup-metadata-view-model.yt-lockup-metadata-view-model--horizontal.yt-lockup-metadata-view-model--compact div.yt-lockup-metadata-view-model__menu-button button-view-model.ytSpecButtonViewModelHost button.yt-spec-button-shape-next.yt-spec-button-shape-next--text.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
 		width: 20px;
 		height: 30px;
 	}
-	
+
+	button.yt-spec-button-shape-next.yt-spec-button-shape-next--tonal.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button.yt-spec-button-shape-next--enable-backdrop-filter-experiment.yt-spec-button-shape-next--enable-drop-shadow-experiment {
+		width: 26px;
+		height: 36px;
+	}
+
+	div#primary.style-scope.ytd-watch-flexy div#primary-inner.style-scope.ytd-watch-flexy div#below.style-scope.ytd-watch-flexy ytd-watch-metadata.watch-active-metadata.style-scope.ytd-watch-flexy div#above-the-fold.style-scope.ytd-watch-metadata div#top-row.style-scope.ytd-watch-metadata div#actions.item.style-scope.ytd-watch-metadata div#actions-inner.style-scope.ytd-watch-metadata div#menu.style-scope.ytd-watch-metadata ytd-menu-renderer.style-scope.ytd-watch-metadata yt-button-shape#button-shape.style-scope.ytd-menu-renderer {
+		margin-left: 5px;
+		margin-top: 0px;
+	}
+
+	div#primary-inner.style-scope.ytd-watch-flexy div#below.style-scope.ytd-watch-flexy ytd-watch-metadata.watch-active-metadata.style-scope.ytd-watch-flexy div#above-the-fold.style-scope.ytd-watch-metadata div#top-row.style-scope.ytd-watch-metadata div#actions.item.style-scope.ytd-watch-metadata div#actions-inner.style-scope.ytd-watch-metadata div#menu.style-scope.ytd-watch-metadata ytd-menu-renderer.style-scope.ytd-watch-metadata div#top-level-buttons-computed.top-level-buttons.style-scope.ytd-menu-renderer yt-button-view-model.ytd-menu-renderer {
+		margin-left: 5px;
+	}
+
 	.yt-lockup-metadata-view-model__menu-button {
 		right: -2px;
 		top: -3px;
