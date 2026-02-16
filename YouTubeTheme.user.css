@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           YouTube Unsloppified
 @namespace      YouTube unsloppified
-@version        1.0.1
+@version        1.0.3
 @description    An extension that "Unsloppifies" YouTube.
 @author         Hex!
 ==/UserStyle== */
@@ -13,7 +13,7 @@
 	/* Footer Tag */
 	#copyright div::after {
 		white-space: pre;
-		content: "\aYoutube Unsloppified v1.0.2";
+		content: "\aYoutube Unsloppified v1.0.3";
 	}
 
 	/* "Unsloppified" next to YouTube logo */
@@ -24,7 +24,7 @@
 		color: #fff6;
 		background: #0000 !important;
 		display: inline-block;
-		margin-left: -8px;
+		margin-left: -4px;
 		position: relative;
 		top: 5px;
 		pointer-events: none;
@@ -33,16 +33,16 @@
 	}
 
 	ytd-masthead #start ytd-topbar-logo-renderer::after {
-		content: "v1.0.2";
+		content: "v1.0.3";
 		font-size: 1.05rem;
 		font-weight: 550;
 		color: #fff6;
 		background: #0000 !important;
 		display: inline-block;
-		margin-left: -20px;
+		margin-left: -31px;
 		letter-spacing: -0.2px;
 		position: relative;
-		top: 26px;
+		top: 29px;
 		pointer-events: none;
 		white-space: nowrap;
 	}
@@ -136,6 +136,13 @@
 		padding: 10px 12px;
 		transform: translateY(-36%) !important;
 	}
+
+	/* Remove channel items from left drawer only */
+	tp-yt-app-drawer ytd-guide-entry-renderer:has(a#endpoint[href*="/channel/"]),
+	tp-yt-app-drawer ytd-guide-entry-renderer:has(a#endpoint[href*="/@"]) {
+		display: none !important;
+	}
+
 
 	div#sections.style-scope.ytd-guide-renderer ytd-guide-section-renderer.style-scope.ytd-guide-renderer:has([href="/feed/you"]) {
 		padding: 10px 12px;
@@ -244,6 +251,16 @@
 		display: none;
 	}
 
+	.ytSearchboxComponentDesktop .ytSearchboxComponentClearButton {
+		height: 25px;
+		width: 25px;
+		border-radius: 2px;
+	}
+
+	yt-icon-button.ytd-masthead,
+	yt-icon-button.ytd-masthead:hover {
+		border-radius: 2px;
+	}
 
 	/*****************************************
  	** CHANNEL PAGE APPEARANCE
@@ -432,6 +449,15 @@
 		height: 0 !important;
 	}
 
+
+	ytd-popup-container.style-scope.ytd-app tp-yt-iron-dropdown.style-scope.ytd-popup-container div#contentWrapper.style-scope.tp-yt-iron-dropdown yt-sheet-view-model.ytSheetViewModelHost.ytSheetViewModelContextual {
+		border-radius: 2px;
+	}
+
+	ytd-popup-container.style-scope.ytd-app tp-yt-iron-dropdown.style-scope.ytd-popup-container div#contentWrapper.style-scope.tp-yt-iron-dropdown yt-sheet-view-model.ytSheetViewModelHost.ytSheetViewModelContextual yt-contextual-sheet-layout.ytContextualSheetLayoutHost {
+		background-color: #474545d6;
+	}
+
 	/*****************************************
  	** Home Page Sub Type
  	******************************************/
@@ -514,6 +540,10 @@
 			pointer-events: none !important;
 		}
 
+		.yt-spec-touch-feedback-shape--thumbnail-size-large .yt-spec-touch-feedback-shape__hover-effect {
+			border-radius: 3px;
+		}
+
 		ytd-rich-section-renderer #content.style-scope.ytd-rich-section-renderer {
 			font-size: 0 !important;
 			position: relative;
@@ -534,10 +564,12 @@
 
 
 	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
-		width: 15px;
+		width: 20px;
 	}
 
-
+	.ytVideoDescriptionYouchatSectionViewModelHost {
+		display: none !important;
+	}
 	/*****************************************
  	** Subscriptions Sub Type
  	******************************************/
@@ -567,7 +599,7 @@
 			height: 90%;
 		}
 
-		/* Back-layer hover overlay */
+		/* Back-layer hover overlay 
 		ytd-rich-item-renderer::before {
 			content: "";
 			position: absolute;
@@ -580,8 +612,7 @@
 			border-radius: 8px;
 			z-index: -1;
 			pointer-events: none;
-		}
-
+		}*/
 		/* Hover state */
 		ytd-rich-item-renderer:hover::before {
 			background: rgba(255, 255, 255, 0.12);
@@ -636,6 +667,10 @@
 			background: rgba(255, 255, 255, .07);
 		}
 
+		.yt-spec-touch-feedback-shape--thumbnail-size-large .yt-spec-touch-feedback-shape__hover-effect {
+			border-radius: 3px;
+		}
+
 		.yt-lockup-metadata-view-model__menu-button {
 			right: 0;
 			top: -2px;
@@ -651,16 +686,16 @@ regexp("https?://www.youtube.com/live.*") {
 
 
 	ytd-masthead #start ytd-topbar-logo-renderer::after {
-		content: "v1.0.2";
+		content: "v1.0.3";
 		font-size: 1.05rem;
 		font-weight: 550;
 		color: #fff6;
 		background: #0000 !important;
 		display: inline-block;
-		margin-left: -30px;
+		margin-left: -31px;
 		letter-spacing: -0.2px;
 		position: relative;
-		top: 26px;
+		top: 29px;
 		pointer-events: none;
 		white-space: nowrap;
 	}
@@ -733,6 +768,7 @@ regexp("https?://www.youtube.com/live.*") {
 	.ytp-modern-videowall-still-image {
 		border-radius: 3px;
 	}
+
 
 	.ytp-modern-videowall-still-info-title {
 		font-size: clamp(5px, 0.65vw, 11.0px) !important;
@@ -1187,9 +1223,27 @@ regexp("https?://www.youtube.com/live.*") {
 		background: rgba(255, 255, 255, .07);
 	}
 
+
+	/* Match feedback button style to rest of website */
+	/* Hide background box for more actions button */
+	.yt-lockup-metadata-view-model__menu-button {
+		right: -2px;
+		top: -3px;
+	}
+
 	div.yt-lockup-view-model__metadata yt-lockup-metadata-view-model.yt-lockup-metadata-view-model.yt-lockup-metadata-view-model--horizontal.yt-lockup-metadata-view-model--compact div.yt-lockup-metadata-view-model__menu-button button-view-model.ytSpecButtonViewModelHost button.yt-spec-button-shape-next.yt-spec-button-shape-next--text.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button {
 		width: 20px;
 		height: 30px;
+	}
+
+	.yt-lockup-metadata-view-model__menu-button:has([aria-label="More actions"]) .ytSpecIconShapeHost svg path {
+		opacity: 0 !important;
+	}
+	/* When hovering the video item, show the button AND the icon */
+	.yt-lockup-view-model--wrapper:hover .yt-lockup-metadata-view-model__menu-button:has([aria-label="More actions"]) .ytSpecIconShapeHost svg path {
+
+		opacity: 1 !important;
+		transition: opacity 0.2s ease;
 	}
 
 	button.yt-spec-button-shape-next.yt-spec-button-shape-next--tonal.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-button.yt-spec-button-shape-next--enable-backdrop-filter-experiment.yt-spec-button-shape-next--enable-drop-shadow-experiment {
@@ -1206,10 +1260,7 @@ regexp("https?://www.youtube.com/live.*") {
 		margin-left: 5px;
 	}
 
-	.yt-lockup-metadata-view-model__menu-button {
-		right: -2px;
-		top: -3px;
-	}
+
 
 	/* Make sure the video card / thumbnail container is the anchor */
 	ytd-rich-item-renderer,
@@ -1280,7 +1331,6 @@ regexp("https?://www.youtube.com/live.*") {
 	#dislike-button.style-scope.ytd-comment-engagement-bar yt-button-shape:has(button[aria-pressed="true"]) .ytSpecIconShapeHost div svg path {
 		color: #3097e8;
 	}
-
 
 	#author-comment-badge.style-scope.ytd-comment-view-model ytd-author-comment-badge-renderer.style-scope.ytd-comment-view-model {
 		--yt-basic-background-color: rgba(136, 136, 136, 1.000);
